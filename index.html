@@ -1,640 +1,276 @@
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Growth Partner — スモールビジネス向け成果直結型AI導入伴走支援</title>
-  <meta name="description" content="中小企業・スタートアップ向けの成果コミット型AI導入支援。AI導入デザインスプリント→ワークフロー実装→運用顧問の3フェーズで伴走します。" />
-  <meta name="color-scheme" content="light dark">
-  <!-- Google Font (軽量) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#ffffff;
-      --primary:#0b63ff;
-      --accent:#0f7bff;
-      --muted:#6b7280;
-      --surface:#f6f9ff;
-      --card:#ffffff;
-      --radius:12px;
-      --max:1200px;
-      --glass: rgba(255,255,255,0.6);
-      --shadow: 0 10px 30px rgba(9,30,66,0.06);
-      --gap:18px;
-    }
-    /* Reset */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, "Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-      background:var(--bg);
-      color:#0f1724;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.6;
-      -webkit-text-size-adjust:100%;
-      -webkit-tap-highlight-color: transparent;
-    }
-    img{max-width:100%;height:auto;display:block}
-    a{color:var(--primary);text-decoration:none}
-    button{font-family:inherit}
-
-    /* Container */
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
-
-    /* Header */
-    header{
-      position:sticky;top:0;background:rgba(255,255,255,0.88);backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid #eef2ff;z-index:60;
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{
-      width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));
-      display:inline-grid;place-items:center;color:#fff;font-weight:700;font-size:18px;
-      box-shadow: 0 6px 18px rgba(11,99,255,0.12), inset 0 -4px 8px rgba(0,0,0,0.05);
-      flex-shrink:0;
-    }
-    .brand h1{font-size:16px;margin:0;color:#051129}
-    .brand .tag{font-size:12px;color:var(--muted);margin-top:2px}
-
-    nav.primary{display:flex;align-items:center;gap:18px}
-    nav.primary ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-    .btn-primary{background:var(--primary);color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;box-shadow:0 8px 20px rgba(11,99,255,0.12);border:0}
-    .btn-ghost{background:transparent;border:1px solid #eef2ff;padding:8px 12px;border-radius:8px}
-
-    /* mobile nav */
-    .mobile-toggle{display:none;background:transparent;border:0;padding:8px;border-radius:8px}
-    .mobile-menu{display:none;position:fixed;inset:64px 16px 16px 16px;background:rgba(255,255,255,0.98);border-radius:12px;box-shadow:0 20px 40px rgba(2,6,23,0.08);padding:18px;z-index:70}
-    .mobile-menu ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
-    .mobile-menu a{display:block;padding:10px;border-radius:8px}
-
-    /* Hero */
-    .hero{
-      display:grid;
-      grid-template-columns:1fr 420px;
-      gap:36px;
-      align-items:center;
-      padding:64px 0 48px;
-    }
-    .kicker{display:inline-block;background:var(--surface);color:var(--primary);padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:18px}
-    .hero h2{font-size:36px;margin:0 0 16px;line-height:1.05}
-    .lead{color:var(--muted);font-size:16px;margin-bottom:20px;max-width:720px}
-    .ctas{display:flex;gap:12px;flex-wrap:wrap}
-
-    .hero-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(243,248,255,0.85));
-      padding:22px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(11,99,255,0.06)
-    }
-    .hero-card h4{margin:0 0 8px;color:#07203a;font-size:18px}
-    .hero-card p{margin:0;color:var(--muted);font-size:14px}
-
-    /* Sections */
-    section{padding:48px 0;border-top:1px solid #f3f7ff}
-    .section-title{text-align:center;margin-bottom:6px}
-    .section-title h3{font-size:20px;margin:0;color:#071428}
-    .section-title p{color:var(--muted);margin-top:10px;font-size:14px}
-
-    /* Cards */
-    .cards{display:flex;gap:var(--gap);flex-wrap:wrap;margin-top:20px}
-    .card{flex:1 1 220px;background:var(--card);padding:18px;border-radius:12px;border:1px solid #f2f6ff;box-shadow:0 8px 20px rgba(11,99,255,0.03)}
-    .card h4{margin:0 0 8px;font-size:16px;color:#07203a}
-    .card p{margin:0;color:var(--muted);font-size:14px}
-
-    /* Phases */
-    .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
-    .phase{background:linear-gradient(180deg,#fff,#fbfdff);padding:20px;border-radius:12px;border:1px solid #eef6ff}
-    .p-title{font-weight:700;color:var(--primary);margin-bottom:10px}
-    .phase ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px}
-
-    /* strengths */
-    .strengths{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:20px}
-    .strength{background:var(--surface);padding:18px;border-radius:12px;border:1px solid #eef6ff;text-align:center}
-    .strength h5{margin:8px 0 6px;color:#08203a}
-    .strength p{margin:0;color:var(--muted);font-size:13px}
-
-    /* flow */
-    .flow{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .step{flex:1 1 220px;background:#fff;padding:18px;border-radius:12px;border:1px solid #eef6ff}
-    .step h4{margin:0 0 8px;color:var(--primary)}
-    .step p{margin:0;color:var(--muted);font-size:14px}
-
-    /* cases */
-    .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
-    .case{padding:18px;border-radius:12px;background:#fff;border:1px solid #eef6ff}
-    .case h4{margin:0 0 8px}
-    .case p{margin:0;color:var(--muted);font-size:14px}
-
-    /* pricing */
-    .pricing{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
-    .plan{flex:1 1 260px;background:linear-gradient(180deg,#fff,#fcfeff);padding:18px;border-radius:12px;border:1px solid #eef6ff;text-align:left}
-    .plan h4{margin:0 0 6px;color:#071428}
-    .plan p{margin:0;color:var(--muted);font-size:14px}
-
-    /* faq */
-    .faq{max-width:960px;margin:0 auto}
-    .qa{border-bottom:1px solid #f3f7ff;padding:14px 0}
-    .q{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-    .q h4{font-size:15px;margin:0}
-    .a{margin-top:12px;color:var(--muted);font-size:14px;display:none}
-
-    /* contact */
-    .contact{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:start}
-    .form{background:#fff;padding:20px;border-radius:12px;border:1px solid #eef6ff}
-    .form label{display:block;font-size:13px;color:#334155;margin-bottom:6px}
-    .form input,.form textarea, .form select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefc;background:#fcfeff;font-size:14px;margin-bottom:12px}
-    .form button{display:inline-block;background:var(--primary);color:#fff;padding:12px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
-
-    /* footer */
-    footer{background:#07122b;color:#cbd5e1;padding:30px 0;margin-top:32px;border-top:1px solid rgba(255,255,255,0.03)}
-    footer .fwrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-
-    /* utility */
-    .muted{color:var(--muted)}
-    .caps{font-size:12px;letter-spacing:0.06em;color:var(--muted)}
-    .hr{height:1px;background:#f3f7ff;border-radius:2px;margin:18px 0}
-
-    /* Responsive adjustments */
-    @media (max-width:1080px){
-      .hero{grid-template-columns:1fr 360px}
-      .phases{grid-template-columns:repeat(2,1fr)}
-      .strengths{grid-template-columns:repeat(2,1fr)}
-      .cases{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:780px){
-      .nav ul{display:none}
-      .mobile-toggle{display:inline-flex}
-      .hero{grid-template-columns:1fr;gap:20px;padding:36px 0}
-      .hero h2{font-size:26px}
-      .hero-card{order:2}
-      .phases{grid-template-columns:1fr}
-      .strengths{grid-template-columns:1fr}
-      .cases{grid-template-columns:1fr}
-      .contact{grid-template-columns:1fr}
-      .wrap{padding:0 16px}
-      .mobile-menu{display:none}
-    }
-
-    /* small screens: mobile menu open */
-    .mobile-menu.open{display:block}
-
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      *{transition:none !important}
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="wrap nav" aria-label="global navigation">
-      <div class="brand" aria-hidden="false">
-        <div class="logo" aria-hidden="true">AG</div>
-        <div>
-          <h1 style="font-size:16px;margin:0">AI Growth Partner</h1>
-          <div class="tag">成果直結型 AI 導入伴走支援</div>
-        </div>
-      </div>
-
-      <nav class="primary" role="navigation" aria-label="primary">
-        <ul>
-          <li><a href="#concept">コンセプト</a></li>
-          <li><a href="#phases">3フェーズ</a></li>
-          <li><a href="#cases">導入事例</a></li>
-          <li><a href="#pricing">料金</a></li>
-          <li><a class="btn-primary" href="#contact">無料相談</a></li>
-        </ul>
-
-        <!-- mobile toggle -->
-        <button class="mobile-toggle" aria-expanded="false" aria-controls="mobileMenu" id="mobileToggle" title="メニュー">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="#0b63ff" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </button>
-      </nav>
-    </div>
-
-    <!-- mobile menu -->
-    <div id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div class="logo" style="width:40px;height:40px;font-size:14px">AG</div>
-          <div>
-            <div style="font-weight:700">AI Growth Partner</div>
-            <div class="caps">成果直結型 AI 導入伴走支援</div>
-          </div>
-        </div>
-        <button id="mobileClose" aria-label="閉じる" style="background:transparent;border:0;padding:6px;cursor:pointer">✕</button>
-      </div>
-      <ul>
-        <li><a href="#concept">コンセプト</a></li>
-        <li><a href="#phases">3フェーズ</a></li>
-        <li><a href="#cases">導入事例</a></li>
-        <li><a href="#pricing">料金</a></li>
-        <li><a class="btn-primary" href="#contact">無料相談</a></li>
-      </ul>
-      <div style="margin-top:14px;color:var(--muted);font-size:13px">電話: 03-1234-5678（平日 9:30〜18:30）</div>
-    </div>
-  </header>
-
-  <main class="wrap" role="main">
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <div class="kicker">中小企業・スタートアップ向け</div>
-        <h2 id="hero-title">現場で使えるAIを、経営に直結させる。</h2>
-        <p class="lead">
-          単なるツール導入に留まらない。AIで<strong>売上</strong>と<strong>生産性</strong>を同時に伸ばすための
-          <strong>成果コミット型の伴走支援</strong>を提供します。小さく始めて、確実に拡張するロードマップで導入を支援します。
-        </p>
-        <div class="ctas" role="group" aria-label="call to action">
-          <a href="#contact" class="btn-primary">無料相談を申し込む</a>
-          <a href="#phases" class="btn-ghost" style="padding:10px 14px;border-radius:10px;">サービス詳細を見る</a>
-        </div>
-
-        <!-- Key bullets -->
-        <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
-          <div style="background:var(--surface);padding:10px 12px;border-radius:10px;font-size:13px;color:var(--primary);font-weight:700">短期PoC（2〜4週）</div>
-          <div style="background:var(--surface);padding:10px 12px;border-radius:10px;font-size:13px;color:#064e3b;font-weight:700">成果連動型契約</div>
-          <div style="background:var(--surface);padding:10px 12px;border-radius:10px;font-size:13px;color:#065f46;font-weight:700">月額顧問で定着化</div>
-        </div>
-      </div>
-
-      <aside class="hero-card" aria-label="Quick summary">
-        <h4>AI Growth Partner が提供する価値</h4>
-        <p><strong>業務改善 × 売上貢献 × コスト最適化</strong>の3軸でAI導入を設計。PoCで効果を確認してから、本番導入→スケーリングまで伴走します。</p>
-        <div style="margin-top:12px" class="caps">まずは短期PoCで効果検証 → 本番導入 → 月次で定着化</div>
-      </aside>
-    </section>
-
-    <!-- Concept -->
-    <section id="concept" aria-labelledby="concept-title">
-      <div class="section-title">
-        <h3 id="concept-title">事業コンセプト</h3>
-        <p>「現場で使えるAIを、経営に直結させる。」 — AI導入を経営改善プロジェクトとして推進します。</p>
-      </div>
-
-      <div class="cards" role="list" aria-label="features">
-        <div class="card" role="listitem">
-          <h4>経営に直結する成果設計</h4>
-          <p>単なる技術導入ではなく、売上増・コスト削減・業務生産性を定量で設計し、ROIを可視化します。</p>
-        </div>
-        <div class="card" role="listitem">
-          <h4>スピード感あるPoC</h4>
-          <p>2〜4週間の短期PoCで実効性を検証し、意思決定の手間を削減します。</p>
-        </div>
-        <div class="card" role="listitem">
-          <h4>低リスクの段階導入</h4>
-          <p>小さく始めて実績を積み、段階的にスケールするためリスクを最小化します。</p>
-        </div>
-        <div class="card" role="listitem">
-          <h4>継続的な運用最適化</h4>
-          <p>APIコストやプロンプトの最適化、社内定着化支援までワンストップで提供します。</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Phases -->
-    <section id="phases" aria-labelledby="phases-title">
-      <div class="section-title">
-        <h3 id="phases-title">サービスモデル：AI導入トライアド（3フェーズ）</h3>
-        <p>顧客の予算・成熟度に合わせ、段階的に導入から拡張まで伴走します。</p>
-      </div>
-
-      <div class="phases" role="list" aria-label="phases">
-        <div class="phase" role="listitem">
-          <div class="p-title">Step 1 — AI導入デザインスプリント</div>
-          <div style="font-size:13px;color:var(--muted)">固定費 30〜50万円（2〜4週間）</div>
-          <ul>
-            <li>業務棚卸 → AI適用候補（上位3領域）</li>
-            <li>ROI試算（定量での意思決定支援）</li>
-            <li>短期PoCで実効性をデモ</li>
-          </ul>
-        </div>
-
-        <div class="phase" role="listitem">
-          <div class="p-title">Step 2 — ワークフロー自動化パッケージ</div>
-          <div style="font-size:13px;color:var(--muted)">実装費＋成果連動（例：削減時間×単価の一部）</div>
-          <ul>
-            <li>PoCを本番化・既存SaaS連携（Notion/Slack/Google等）</li>
-            <li>ノーコード＋API構成で短納期かつ低コスト実装</li>
-            <li>担当者教育・マニュアル提供</li>
-          </ul>
-        </div>
-
-        <div class="phase" role="listitem">
-          <div class="p-title">Step 3 — AIマネジメント顧問</div>
-          <div style="font-size:13px;color:var(--muted)">月額 10〜30万円（継続）</div>
-          <ul>
-            <li>月次レビュー・利用ダッシュボードによる可視化</li>
-            <li>APIコスト最適化・モデル選定支援</li>
-            <li>社内教育で定着化、段階的拡張を推進</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- differentiation -->
-    <section aria-labelledby="diff-title">
-      <div class="section-title">
-        <h3 id="diff-title">差別化設計 — なぜ私たちが選ばれるか</h3>
-        <p>技術提供だけで終わらない「成果にまで責任を持つ」支援設計。</p>
-      </div>
-
-      <div class="strengths" role="list" aria-label="strengths">
-        <div class="strength" role="listitem">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="margin:0 auto;display:block"><rect width="24" height="24" rx="6" fill="#eaf4ff"/><path d="M7 12h10" stroke="#0b63ff" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <h5>成果コミット型</h5>
-          <p>削減時間やコストに紐づく成果報酬で、投資リスクを低減。</p>
-        </div>
-
-        <div class="strength" role="listitem">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="margin:0 auto;display:block"><rect width="24" height="24" rx="6" fill="#fff8ea"/><path d="M12 6v6l3 3" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h5>経営視点のROI設計</h5>
-          <p>導入は“目的”ではなく“手段”。指標で効果を追います。</p>
-        </div>
-
-        <div class="strength" role="listitem">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="margin:0 auto;display:block"><rect width="24" height="24" rx="6" fill="#f0fff6"/><path d="M6 12h12" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <h5>ノーコード＋SaaS連携前提</h5>
-          <p>既存ツールとの統合で導入コストと時間を圧縮。</p>
-        </div>
-
-        <div class="strength" role="listitem">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" style="margin:0 auto;display:block"><rect width="24" height="24" rx="6" fill="#fff0f6"/><path d="M12 6v6" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <h5>運用コスト最適化</h5>
-          <p>プロンプト効率化やモデル選定でAPI従量費を抑制。</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Flow -->
-    <section aria-labelledby="flow-title">
-      <div class="section-title">
-        <h3 id="flow-title">導入の流れ（シンプル4ステップ）</h3>
-        <p>現場の巻き込み→PoC→本番→定着。各段階で意思決定を支援します。</p>
-      </div>
-
-      <div class="flow" role="list" aria-label="flow-steps">
-        <div class="step" role="listitem">
-          <h4>1. ヒアリング・課題整理</h4>
-          <p>経営・現場をヒアリングし、業務プロセスを可視化します（1〜2週）。</p>
-        </div>
-        <div class="step" role="listitem">
-          <h4>2. 設計・PoC</h4>
-          <p>上位3候補からPoCを実施（2〜4週）。ROIを数値で評価します。</p>
-        </div>
-        <div class="step" role="listitem">
-          <h4>3. 本番構築・導入</h4>
-          <p>SaaS連携も含む実装、教育、運用ルールの整備を行います。</p>
-        </div>
-        <div class="step" role="listitem">
-          <h4>4. 定着支援・拡張</h4>
-          <p>月次レビューで改善。追加業務への水平展開を支援します。</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Cases -->
-    <section id="cases" aria-labelledby="cases-title">
-      <div class="section-title">
-        <h3 id="cases-title">導入事例（ダミーデータ）</h3>
-        <p>PoC→実装→定着までの典型的な成果を提示します。</p>
-      </div>
-
-      <div class="cases" role="list" aria-label="cases-list">
-        <div class="case" role="listitem">
-          <h4>株式会社A（カスタマーサポート）</h4>
-          <p><strong>課題：</strong>メール・問い合わせ対応に膨大な工数</p>
-          <p><strong>導入：</strong>FAQ自動応答＋要約生成</p>
-          <p><strong>結果：</strong>対応工数 30% 削減、顧客満足度維持</p>
-        </div>
-
-        <div class="case" role="listitem">
-          <h4>株式会社B（総務／議事録）</h4>
-          <p><strong>課題：</strong>議事録作成が属人化</p>
-          <p><strong>導入：</strong>音声→自動要約＋議事録テンプレ生成</p>
-          <p><strong>結果：</strong>作成時間 70% 短縮</p>
-        </div>
-
-        <div class="case" role="listitem">
-          <h4>株式会社C（営業）</h4>
-          <p><strong>課題：</strong>営業メール作成の工数</p>
-          <p><strong>導入：</strong>テンプレ自動生成＋応答支援</p>
-          <p><strong>結果：</strong>月間 200 通相当の自動化で効率化</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" aria-labelledby="pricing-title">
-      <div class="section-title">
-        <h3 id="pricing-title">料金モデル（例）</h3>
-        <p>フェーズに応じた柔軟な料金体系。成果連動の設計で投資回収を確実にします。</p>
-      </div>
-
-      <div class="pricing" role="list" aria-label="pricing-list">
-        <div class="plan" role="listitem">
-          <h4>Step1：AI導入デザインスプリント</h4>
-          <p>固定費 ¥300,000〜¥500,000（2〜4週）</p>
-          <p class="muted" style="margin-top:8px">業務棚卸／ROI試算／PoC（簡易プロトタイプ）を含む</p>
-        </div>
-
-        <div class="plan" role="listitem">
-          <h4>Step2：ワークフロー実装</h4>
-          <p>実装費 ¥500,000〜¥2,000,000 + 成果報酬（10〜20%）</p>
-          <p class="muted" style="margin-top:8px">SaaS連携、ノーコードベースで短納期を実現</p>
-        </div>
-
-        <div class="plan" role="listitem">
-          <h4>Step3：AI運用顧問</h4>
-          <p>月額 ¥100,000〜¥300,000</p>
-          <p class="muted" style="margin-top:8px">運用最適化・教育・拡張支援を提供</p>
-        </div>
-      </div>
-
-      <p class="muted" style="margin-top:12px">平均顧客LTV想定：¥1,200,000〜¥2,500,000（年）</p>
-    </section>
-
-    <!-- FAQ -->
-    <section aria-labelledby="faq-title">
-      <div class="section-title">
-        <h3 id="faq-title">よくある質問（FAQ）</h3>
-        <p>お問い合わせが多い事項をまとめています。ここに無い内容はお気軽にご相談ください。</p>
-      </div>
-
-      <div class="faq" id="faq" role="list" aria-label="faq-list">
-        <div class="qa" role="listitem">
-          <div class="q" data-qa="q1" onclick="toggleQA('q1')">
-            <h4>他社のAI支援と何が違いますか？</h4>
-            <div style="font-size:18px;color:var(--muted)">＋</div>
-          </div>
-          <div id="a-q1" class="a">技術提供で終わらず、ROIにコミットする点が大きな違いです。PoCで効果を確認したうえで、成果連動で本番実装・運用定着まで伴走します。</div>
-        </div>
-
-        <div class="qa" role="listitem">
-          <div class="q" data-qa="q2" onclick="toggleQA('q2')">
-            <h4>初期費用の目安は？</h4>
-            <div style="font-size:18px;color:var(--muted)">＋</div>
-          </div>
-          <div id="a-q2" class="a">Step1のデザインスプリントは目安 ¥300,000〜¥500,000。業務規模によって変動します。見積は無料で作成します。</div>
-        </div>
-
-        <div class="qa" role="listitem">
-          <div class="q" data-qa="q3" onclick="toggleQA('q3')">
-            <h4>自社データに対応できますか？</h4>
-            <div style="font-size:18px;color:var(--muted)">＋</div>
-          </div>
-          <div id="a-q3" class="a">可能です。データ形式や品質に応じて前処理／正規化を行い、最適なモデル・プロンプト設計を実施します。</div>
-        </div>
-
-        <div class="qa" role="listitem">
-          <div class="q" data-qa="q4" onclick="toggleQA('q4')">
-            <h4>導入後のサポートはどこまで？</h4>
-            <div style="font-size:18px;color:var(--muted)">＋</div>
-          </div>
-          <div id="a-q4" class="a">月次レビュー、利用ダッシュボードでの可視化、プロンプト改善、APIコスト最適化、社内教育まで対応します（Step3）。</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" aria-labelledby="contact-title">
-      <div class="section-title">
-        <h3 id="contact-title">まずは無料相談をご利用ください</h3>
-        <p>現状の課題を整理し、最短ルートで効果を出すための設計をご提案します。</p>
-      </div>
-
-      <div class="contact" role="region" aria-label="contact area">
-        <div>
-          <h4 style="margin-top:0">無料相談内容（例）</h4>
-          <ul style="color:var(--muted);font-size:14px">
-            <li>AIで効果が見込める業務の特定</li>
-            <li>ROIの簡易試算と導入ロードマップ提示</li>
-            <li>短期PoCでの検証設計提案</li>
-          </ul>
-
-          <div style="margin-top:18px;background:#fff;padding:16px;border-radius:12px;border:1px solid #eef6ff">
-            <strong>電話でのお問合せ</strong>
-            <p style="margin:8px 0 0;color:var(--muted)">03-1234-5678（平日 9:30〜18:30）</p>
-          </div>
-        </div>
-
-        <form class="form" onsubmit="handleSubmit(event)" aria-label="contact form">
-          <label for="company">会社名 / 団体名</label>
-          <input id="company" name="company" type="text" placeholder="例）株式会社サンプル" required>
-
-          <label for="name">お名前</label>
-          <input id="name" name="name" type="text" placeholder="例）山田 太郎" required>
-
-          <label for="email">メールアドレス</label>
-          <input id="email" name="email" type="email" placeholder="例）taro@example.com" required>
-
-          <label for="budget">検討フェーズ</label>
-          <select id="budget" name="budget">
-            <option value="diagnosis">まずは診断（Step1）</option>
-            <option value="implementation">導入検討（Step2）</option>
-            <option value="operation">運用・顧問（Step3）</option>
-            <option value="other">その他</option>
-          </select>
-
-          <label for="message">ご相談内容（簡潔に）</label>
-          <textarea id="message" name="message" rows="4" placeholder="導入したい業務や現状の課題をご記入ください" required></textarea>
-
-          <button type="submit">無料相談を申し込む</button>
-          <p id="form-msg" style="margin-top:10px;color:var(--muted);font-size:13px;display:none"></p>
-        </form>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <div class="wrap fwrap" style="display:flex;flex-direction:column;gap:12px">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="logo" style="width:40px;height:40px;font-size:16px">AG</div>
-        <div>
-          <div style="font-weight:700;color:#fff">AI Growth Partner</div>
-          <div style="font-size:13px;color:#9fb0d1">成果直結型 AI 導入伴走支援</div>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <div style="color:#b6c6e8">
-          <div>© 2025 AI Growth Partner</div>
-          <div style="font-size:13px;margin-top:6px">住所：東京都千代田区 ○○町 1-2-3</div>
-        </div>
-
-        <div style="text-align:right">
-          <div style="font-size:13px;color:#b6c6e8">お問合せ: info@aigrowthpartner.jp</div>
-          <div style="margin-top:6px"><a href="#" style="color:#dbeafe">プライバシーポリシー</a> <span style="margin:0 6px;color:#2b3b59">|</span> <a href="#" style="color:#dbeafe">利用規約</a></div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // FAQ toggle
-    function toggleQA(id){
-      const el = document.getElementById('a-' + id);
-      if(!el) return;
-      const shown = el.style.display === 'block';
-      document.querySelectorAll('.faq .a').forEach(a => a.style.display = 'none');
-      el.style.display = shown ? 'none' : 'block';
-    }
-
-    // Simulated form handling (no backend) — show confirmation
-    function handleSubmit(e){
-      e.preventDefault();
-      const msg = document.getElementById('form-msg');
-      msg.style.display = 'block';
-      msg.style.color = 'var(--primary)';
-      msg.innerText = '送信を受け付けました。追って担当よりご連絡します（ダミー）。';
-      e.target.reset();
-      setTimeout(()=>{ msg.style.display = 'none'; }, 6000);
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const href = this.getAttribute('href');
-        if(!href || href === "#") return;
-        const target = document.querySelector(href);
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({behavior:'smooth',block:'start'});
-          // close mobile menu if open
-          closeMobileMenu();
-          history.replaceState(null, '', href);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Growth Partner - 現場で使えるAIを、経営に直結させる。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
         }
-      });
-    });
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.3), 0 4px 6px -2px rgba(249, 115, 22, 0.2);
+        }
+        .hero-bg {
+            background-color: #f8fafc;
+            background-image: linear-gradient(120deg, rgba(20, 184, 166, 0.08), rgba(240, 249, 255, 0.1) 70%);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
 
-    // Mobile menu control
-    const mobileToggle = document.getElementById('mobileToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileClose = document.getElementById('mobileClose');
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900">
+                <a href="#">Bridge-Builders</a>
+            </h1>
+            </a>
+        </div>
+    </header>
 
-    function openMobileMenu(){
-      mobileMenu.classList.add('open');
-      mobileMenu.setAttribute('aria-hidden','false');
-      mobileToggle.setAttribute('aria-expanded','true');
-      // prevent background scroll
-      document.body.style.overflow = 'hidden';
-    }
-    function closeMobileMenu(){
-      mobileMenu.classList.remove('open');
-      mobileMenu.setAttribute('aria-hidden','true');
-      mobileToggle.setAttribute('aria-expanded','false');
-      document.body.style.overflow = '';
-    }
+    <main>
+        <!-- 1. ファーストビュー (FV) -->
+        <section class="hero-bg py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <div class="bg-teal-100 text-teal-800 text-sm font-bold px-4 py-1 rounded-full inline-block mb-4">
+                    中小企業向けの伴走型サポート
+                </div>
+                <h2 class="text-4xl md:text-6xl font-black text-gray-900 leading-tight mb-4">
+                    現場で使えるAIを、<br class="hidden md:block">経営に直結させる。
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    生成AI・AIエージェントの導入で売上向上とコスト削減にコミットする
+                </p>
+                <div>
+                    <a href="#cta" id="cta-fv" class="cta-button bg-orange-500 text-white text-xl font-bold py-4 px-10 rounded-full inline-block">
+                        AI導入に関する無料ご相談はこちら
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    mobileToggle && mobileToggle.addEventListener('click', ()=>{
-      const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-      expanded ? closeMobileMenu() : openMobileMenu();
-    });
-    mobileClose && mobileClose.addEventListener('click', closeMobileMenu);
-    // close on overlay click (optional)
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape') closeMobileMenu();
-    });
-  </script>
+        <!-- 2. 顧客のペイン -->
+        <section class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">AI導入を阻む<span class="text-teal-600">4つの壁</span></h3>
+                    <p class="mt-4 text-gray-600">こんなお悩み、ありませんか？</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Pain 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="bg-teal-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">どこから<br>始めるべき？</h4>
+                        <p class="text-gray-600">AIの活用方法が<br>わからない</p>
+                    </div>
+                    <!-- Pain 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="bg-teal-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">社内体制に<br>関する不安</h4>
+                        <p class="text-gray-600">社員のリテラシーに<br>バラつきがある</p>
+                    </div>
+                    <!-- Pain 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="bg-teal-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">投資対効果に<br>関する懸念</h4>
+                        <p class="text-gray-600">生成AI導入で<br>損失を受けたくない</p>
+                    </div>
+                    <!-- Pain 4 -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="bg-teal-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">外部委託の<br>高額費用</h4>
+                        <p class="text-gray-600">開発会社に依頼する<br>と費用がかさばる</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 独自の解決策と差別化 -->
+        <section class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">なぜ、Bridge-Buildersが選ばれるのか？</h3>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">一般的なコンサルや開発会社とは異なり、私たちは経営成果に徹底的にこだわります。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Point 1 -->
+                    <div class="border border-gray-200 p-8 rounded-lg">
+                        <h4 class="text-2xl font-bold text-teal-600 mb-4">01<br>経営成果主導</h4>
+                        <p class="text-gray-600">技術検証（PoC）で終わらせず、<br>仮説に基づく検証で<br>伴走します。</p>
+                    </div>
+                    <!-- Point 2 -->
+                    <div class="border border-gray-200 p-8 rounded-lg bg-teal-50">
+                         <h4 class="text-2xl font-bold text-teal-600 mb-4">02<br>すぐに実装</h4>
+                        <p class="text-gray-600">コンサルティング<br>だけでなく、<br>現場で使える<br>システム構築と<br>活用に向けた研修<br>まで支援します。</p>
+                    </div>
+                    <!-- Point 3 -->
+                    <div class="border border-gray-200 p-8 rounded-lg">
+                        <h4 class="text-2xl font-bold text-teal-600 mb-4">03<br>Kick Off!</h4>
+                        <p class="text-gray-600">ノーコードツール<br>のプロダクト開発で<br>低コストでの導入。<br>成果に応じた<br>料金体系でリスクを<br>最小化します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 中間CTA -->
+        <section id="cta-middle" class="bg-teal-600">
+            <div class="container mx-auto px-6 py-16 text-center">
+                <h3 class="text-3xl font-bold text-white mb-4">まずは自社のAI導入ポテンシャルを知ることから</h3>
+                <p class="text-teal-100 mb-8 max-w-2xl mx-auto">貴社の業務課題をヒアリングし、AIの活用余地を検討します。<br>AIでどれだけの業務効率化・コスト削減が見込めるか、無料で診断します。</p>
+                <a href="#cta" class="cta-button bg-orange-500 text-white text-xl font-bold py-4 px-10 rounded-full inline-block">
+                    AI導入に関する無料ご相談はこちら
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. サービスモデル：AI導入トライアド -->
+        <section class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">成果を出すための<span class="text-teal-600">3ステップ導入モデル</span></h3>
+                    <p class="mt-4 text-gray-600">無理なく、着実に。スモールスタートで大きな成果を目指します。</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
+                    <!-- Step 1 -->
+                    <div class="flex-1 text-center max-w-sm">
+                        <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-teal-500">
+                            <div class="text-teal-500 font-black text-5xl mb-2">01</div>
+                            <h4 class="text-xl font-bold mb-3">AI導入デザイン<br>スプリント</h4>
+                            <p class="text-gray-600 text-left text-sm space-y-2">
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>業務課題の深掘りとAI活用領域の特定</span>
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>無料でのご相談</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="text-teal-300 transform rotate-90 md:rotate-0">
+                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                     <!-- Step 2 -->
+                    <div class="flex-1 text-center max-w-sm">
+                        <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-teal-500">
+                            <div class="text-teal-500 font-black text-5xl mb-2">02</div>
+                            <h4 class="text-xl font-bold mb-3">AIワークフロー<br>実装パッケージ</h4>
+                            <p class="text-gray-600 text-left text-sm space-y-2">
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>ノーコード/ローコードでのシステム構築</span>
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>マニュアル化・社内トレーニング込み</span>
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>料金：10~万円</span>
+                            </p>
+                        </div>
+                    </div>
+                     <!-- Arrow -->
+                    <div class="text-teal-300 transform rotate-90 md:rotate-0">
+                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                     <!-- Step 3 -->
+                    <div class="flex-1 text-center max-w-sm">
+                        <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-teal-500">
+                            <div class="text-teal-500 font-black text-5xl mb-2">03</div>
+                            <h4 class="text-xl font-bold mb-3">AIマネジメント<br>顧問</h4>
+                            <p class="text-gray-600 text-left text-sm space-y-2">
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>モデル最適化と精度モニタリング</span>
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>新規AI活用の企画・社内文化定着支援</span>
+                                <span class="flex items-start"><svg class="w-4 h-4 text-teal-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>月額：10〜万円</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ユースケース -->
+        <section class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900">具体的な<span class="text-teal-600">ユースケース</span>と導入効果</h3>
+                    <p class="mt-4 text-gray-600">広告代理店、EC運営、士業など、幅広い企業で成果を出しています。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Case 1 -->
+                    <div class="bg-slate-50 rounded-lg p-8">
+                        <h4 class="text-xl font-bold mb-3">営業リード対応の自動化</h4>
+                        <p class="text-gray-600 mb-4">問い合わせメールへの一次返信、顧客情報に基づいた提案文の自動生成をAIが実行。</p>
+                        <div class="bg-teal-100 p-4 rounded-lg">
+                            <p class="text-sm text-teal-800">導入効果</p>
+                            <p class="text-teal-900 font-bold text-lg">提案書作成時間を80%短縮</p>
+                        </div>
+                    </div>
+                    <!-- Case 2 -->
+                    <div class="bg-slate-50 rounded-lg p-8">
+                        <h4 class="text-xl font-bold mb-3">社内報告・議事録の自動作成</h4>
+                        <p class="text-gray-600 mb-4">Web会議の録画データから、要点をまとめた議事録や報告書をAIが自動でテキスト化。</p>
+                        <div class="bg-teal-100 p-4 rounded-lg">
+                            <p class="text-sm text-teal-800">導入効果</p>
+                            <p class="text-teal-900 font-bold text-lg">月間40時間の工数削減</p>
+                        </div>
+                    </div>
+                    <!-- Case 3 -->
+                    <div class="bg-slate-50 rounded-lg p-8">
+                        <h4 class="text-xl font-bold mb-3">顧客サポートの自動応答</h4>
+                        <p class="text-gray-600 mb-4">過去のFAQデータを学習させたAIチャットボットが、24時間365日、顧客からの質問に自動で回答。</p>
+                        <div class="bg-teal-100 p-4 rounded-lg">
+                            <p class="text-sm text-teal-800">導入効果</p>
+                            <p class="text-teal-900 font-bold text-lg">問い合わせ対応コストを50%削減</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 6. 最終CTA -->
+        <section id="cta" class="py-20 bg-gray-900 text-white">
+            <div class="container mx-auto px-6 text-center">
+                 <h3 class="text-3xl md:text-4xl font-bold mb-4">数字で証明する、AI導入の価値。</h3>
+                 <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">費用対効果を具体的に試算し、最小コストで最大成果を。<br>無料のご相談窓口で、自社のAI戦略を明確に。</p>
+                 <a href="#" class="cta-button bg-orange-500 text-white text-xl font-bold py-4 px-10 rounded-full inline-block">
+                    AI導入に関する無料ご相談はこちら
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center text-sm text-gray-400">
+            <p>&copy; 2025 Bridge-Builders. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
+
